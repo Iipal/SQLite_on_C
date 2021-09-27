@@ -4,7 +4,7 @@
   "IncludeBlocks": "Merge",
   "SortUsingDeclarations": true,
   "BasedOnStyle": "LLVM",
-  "PointerAlignment": "Middle",
+  "PointerAlignment": "Right",
   "NamespaceIndentation": "All",
   "MaxEmptyLinesToKeep": 1,
   "IndentWrappedFunctionNames": true,

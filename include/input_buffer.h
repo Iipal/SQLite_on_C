@@ -13,6 +13,6 @@ typedef struct {
   ssize_t input_lenght;
 } input_buffer_t;
 
-input_buffer_t * input_buffer_new(void);
+input_buffer_t *input_buffer_new(void);
 
 #endif /* __LIBSQLIGHTER_INPUTBUFFER_H__ */
