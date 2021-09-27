@@ -1,0 +1,12 @@
+**.o
+**.a
+**.out
+**.S
+**.d
+**.DS_Store
+**.log
+test/
+**/**.S
+**/build
+**/debug
+**/sanitize
