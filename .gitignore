@@ -10,3 +10,4 @@ test/
 **/build
 **/debug
 **/sanitize
+libsqlighter
