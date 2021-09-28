@@ -22,9 +22,12 @@
 #include <row.h>
 #include <table.h>
 
-// custom includes:
-#include <command.h>
+// okay, comments just to avoid stupid auto-sort of includes by clang-format
 #include <cursor.h>
+
+// custom includes:
+#include <btree.h>
+#include <command.h>
 #include <meta_command.h>
 
 #endif /* __LIBSQLIGHTER_H__ */

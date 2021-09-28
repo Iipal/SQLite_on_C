@@ -7,8 +7,15 @@ pager_t *pager_open(const char *filename) {
   pager_t *pager;
   assert(pager = calloc(1, sizeof(*pager)));
 
+  const uint32_t file_lenght = lseek(fd, 0, SEEK_END);
+
   pager->fd          = fd;
-  pager->file_lenght = lseek(fd, 0, SEEK_END);
+  pager->file_lenght = file_lenght;
+  pager->num_pages   = (file_lenght / PAGE_SIZE);
+
+  if (file_lenght % PAGE_SIZE) {
+    err(EXIT_FAILURE, "db-file is not a whole number of pages. Corrupted file");
+  }
 
   return pager;
 }
@@ -38,12 +45,16 @@ void *pager_get_page(pager_t *pager, uint32_t page_num) {
     }
 
     pager->pages[page_num] = page;
+
+    if (page_num >= pager->num_pages) {
+      pager->num_pages = page_num + 1;
+    }
   }
 
   return pager->pages[page_num];
 }
 
-void pager_flush(pager_t *pager, uint32_t page_num, uint32_t size) {
+void pager_flush(pager_t *pager, uint32_t page_num) {
   if (!pager->pages[page_num]) {
     err(EXIT_FAILURE, "Tried to flush null page");
   }
@@ -53,7 +64,7 @@ void pager_flush(pager_t *pager, uint32_t page_num, uint32_t size) {
     err(EXIT_FAILURE, "Failed to seek required page to flus");
   }
 
-  ssize_t written = write(pager->fd, pager->pages[page_num], size);
+  ssize_t written = write(pager->fd, pager->pages[page_num], PAGE_SIZE);
   if (0 > written) {
     err(EXIT_FAILURE, "Error writting to db-file.");
   }

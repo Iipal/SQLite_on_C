@@ -24,7 +24,7 @@ void close_input_buffer(input_buffer_t *ib) {
 
 int main(int argc, char *argv[]) {
   if (2 != argc) {
-    errx(EXIT_FAILURE, "Must supply a database filename.\n");
+    errx(EXIT_FAILURE, "Must supply a database filename.");
   }
   const char *db_filename = argv[1];
   table_t *restrict table = db_open(db_filename);

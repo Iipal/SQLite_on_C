@@ -25,7 +25,12 @@ void serialize_row(row_t *src, void *dst);
 void deserialize_row(void *src, row_t *dst);
 
 static inline void print_row(row_t *restrict row) {
-  printf("(%d, %s, %s)\n", row->id, row->username, row->email);
+  printf("(%d, %s|%p, %s|%p)\n",
+         row->id,
+         row->username,
+         row->username,
+         row->email,
+         row->email);
 };
 
 #endif /* __LIBSQLIGHTER_ROW_H__ */

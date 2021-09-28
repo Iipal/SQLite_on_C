@@ -1,6 +1,6 @@
 #include <libsqlighter.h>
 
-prepare_result_t prepare_insert(input_buffer_t *ib, state_t *state) {
+static inline prepare_result_t prepare_insert(input_buffer_t *ib, state_t *state) {
   state->type = STATE_INSERT;
 
   char *keyword   = strtok(ib->buffer, " ");
@@ -40,22 +40,22 @@ prepare_result_t prepare_state(input_buffer_t *ib, state_t *state) {
   return PREPARE_UNRECOGNIZED_STATE;
 }
 
-execute_result_t execute_insert(table_t *table, state_t *state) {
-  if (TABLE_MAX_ROWS <= table->count_rows) {
+static inline execute_result_t execute_insert(table_t *table, state_t *state) {
+  void *node = pager_get_page(table->pager, table->root_page_num);
+  if (LEAF_NODE_MAX_CELLS <= *leaf_node_num_cells(node)) {
     return EXECUTE_TABLE_FULL;
   }
 
   row_t *   r      = &(state->current);
   cursor_t *cursor = new_cursor_end(table);
 
-  serialize_row(r, cursor_value(cursor));
-  ++table->count_rows;
+  leaf_node_insert(cursor, r->id, r);
 
   free(cursor);
 
   return EXECUTE_SUCCESS;
 }
-execute_result_t execute_select(table_t *table, state_t *state) {
+static inline execute_result_t execute_select(table_t *table, state_t *state) {
   (void)state;
   cursor_t *cursor = new_cursor_start(table);
   row_t     r;

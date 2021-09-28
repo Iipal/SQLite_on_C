@@ -3,7 +3,7 @@
 
 typedef struct {
   pager_t *pager;
-  uint32_t count_rows;
+  uint32_t root_page_num;
 } table_t;
 
 table_t *db_open(const char *filename);

@@ -2,36 +2,28 @@
 
 table_t *db_open(const char *filename) {
   pager_t *pager = pager_open(filename);
-  uint32_t rows  = pager->file_lenght / ROW_SIZE;
-
   table_t *out;
   assert((out = calloc(1, sizeof(*out))));
 
-  out->pager      = pager;
-  out->count_rows = rows;
+  out->pager         = pager;
+  out->root_page_num = 0;
+
+  if (!pager->num_pages) {
+    void *root_node = pager_get_page(pager, 0);
+    leaf_node_init(root_node);
+  }
 
   return out;
 }
 
 void db_close(table_t *table) {
-  pager_t *      pager          = table->pager;
-  const uint32_t num_full_pages = table->count_rows / ROWS_PER_PAGE;
+  pager_t *pager = table->pager;
 
-  for (uint32_t i = 0; num_full_pages > i; ++i) {
+  for (uint32_t i = 0; pager->num_pages > i; ++i) {
     if (pager->pages[i]) {
-      pager_flush(pager, i, PAGE_SIZE);
+      pager_flush(pager, i);
       free(pager->pages[i]);
       pager->pages[i] = NULL;
-    }
-  }
-
-  uint32_t num_add_rows = table->count_rows % ROW_SIZE;
-  if (0 < num_add_rows) {
-    uint32_t page_num = num_full_pages;
-    if (pager->pages[page_num]) {
-      pager_flush(pager, page_num, num_add_rows * ROW_SIZE);
-      free(pager->pages[page_num]);
-      pager->pages[page_num] = NULL;
     }
   }
 

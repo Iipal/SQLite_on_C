@@ -1,7 +1,9 @@
 #ifndef __LIBSQLIGHTER_META_COMMAND_H__
 #define __LIBSQLIGHTER_META_COMMAND_H__
 
-#define META_COMMAND_EXIT ".exit"
+#define META_COMMAND_STR_EXIT      ".exit"
+#define META_COMMAND_STR_CONSTANTS ".constants"
+#define META_COMMAND_STR_BTREE     ".btree"
 
 typedef enum {
   META_COMMAND_SUCCESS,
