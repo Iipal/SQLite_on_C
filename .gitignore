@@ -10,4 +10,5 @@ test/
 **/build
 **/debug
 **/sanitize
+**/**.db
 libsqlighter

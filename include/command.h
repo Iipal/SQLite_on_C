@@ -26,7 +26,7 @@ typedef enum {
 
 typedef struct {
   state_type_t type;
-  row_t        cursor;
+  row_t        current;
 } state_t;
 
 prepare_result_t prepare_state(input_buffer_t *ib, state_t *state);

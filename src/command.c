@@ -20,9 +20,9 @@ prepare_result_t prepare_insert(input_buffer_t *ib, state_t *state) {
     return PREPARE_NEGATIVE_ID;
   }
 
-  state->cursor.id = id;
-  strcpy(state->cursor.username, username);
-  strcpy(state->cursor.email, email);
+  state->current.id = id;
+  strcpy(state->current.username, username);
+  strcpy(state->current.email, email);
 
   (void)keyword;
   return PREPARE_SUCCESS;
@@ -45,7 +45,7 @@ execute_result_t execute_insert(table_t *table, state_t *state) {
     return EXECUTE_TABLE_FULL;
   }
 
-  row_t *r = &(state->cursor);
+  row_t *r = &(state->current);
   serialize_row(r, get_table_row_slot(table, table->count_rows));
   ++table->count_rows;
 

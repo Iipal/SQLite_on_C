@@ -23,18 +23,20 @@ void close_input_buffer(input_buffer_t *ib) {
 }
 
 int main(int argc, char *argv[]) {
-  (void)argc;
-  (void)argv;
+  if (2 != argc) {
+    errx(EXIT_FAILURE, "Must supply a database filename.\n");
+  }
+  const char *db_filename = argv[1];
+  table_t *restrict table = db_open(db_filename);
 
-  input_buffer_t *ib    = input_buffer_new();
-  table_t *       table = new_table();
+  input_buffer_t *restrict ib = input_buffer_new();
 
   while (true) {
     print_prompt();
     read_input(ib);
 
     if (ib->buffer[0] == '.') {
-      switch (do_meta_command(ib)) {
+      switch (do_meta_command(ib, table)) {
       case META_COMMAND_SUCCESS:
         continue;
       case META_COMMAND_UNRECOGNIZED:
