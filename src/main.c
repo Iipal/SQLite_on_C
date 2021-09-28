@@ -66,6 +66,10 @@ int main(int argc, char *argv[]) {
     }
 
     switch (execute_state(table, &state)) {
+    case EXECUTE_DUPLICATE_KEY:
+      printf("Error: Duplicate key.\n");
+      break;
+
     case EXECUTE_TABLE_FULL:
       printf("Error: Table full.\n");
       break;

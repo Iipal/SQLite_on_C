@@ -1,11 +1,24 @@
 #include <libsqlighter.h>
 
-void leaf_node_init(void *node) { *leaf_node_num_cells(node) = 0; }
+void leaf_node_init(void *node) {
+  leaf_node_set_type(node, NODE_LEAF);
+  *leaf_node_num_cells(node) = 0;
+}
 
 uint32_t *leaf_node_num_cells(void *node) { return node + LEAF_NODE_NUM_CELLS_OFFSET; }
 
 void *leaf_node_cell(void *node, uint32_t cell_num) {
   return node + LEAF_NODE_HEADER_SIZE + cell_num * LEAF_NODE_CELL_SIZE;
+}
+
+node_type_t leaf_node_get_type(void *node) {
+  uint8_t value = *((uint8_t *)(node + NODE_TYPE_OFFSET));
+  return (node_type_t)value;
+}
+
+void leaf_node_set_type(void *node, node_type_t type) {
+  uint8_t value                           = type;
+  *((uint8_t *)(node + NODE_TYPE_OFFSET)) = value;
 }
 
 uint32_t *leaf_node_key(void *node, uint32_t cell_num) {
@@ -34,6 +47,39 @@ void leaf_node_insert(cursor_t *cursor, uint32_t key, row_t *value) {
   *(leaf_node_key(node, cursor->cell_num)) = key;
 
   serialize_row(value, leaf_node_value(node, cursor->cell_num));
+}
+
+cursor_t *leaf_node_find(table_t *table, uint32_t page_num, uint32_t key) {
+  void *   node      = pager_get_page(table->pager, page_num);
+  uint32_t num_cells = *leaf_node_num_cells(node);
+
+  cursor_t *cursor;
+  assert(cursor = calloc(1, sizeof(*cursor)));
+
+  cursor->table    = table;
+  cursor->page_num = page_num;
+
+  uint32_t min_index          = 0;
+  uint32_t one_past_max_index = num_cells;
+
+  while (one_past_max_index != min_index) {
+    uint32_t index        = (min_index + one_past_max_index) / 2;
+    uint32_t key_at_index = *leaf_node_key(node, index);
+
+    if (key_at_index == key) {
+      cursor->cell_num = index;
+      return cursor;
+    }
+
+    if (key_at_index > key) {
+      one_past_max_index = index;
+    } else {
+      min_index = index + 1;
+    }
+  }
+
+  cursor->cell_num = min_index;
+  return cursor;
 }
 
 void print_leaf_node(void *node) {

@@ -9,7 +9,11 @@ typedef enum {
   PREPARE_UNRECOGNIZED_STATE,
 } prepare_result_t;
 
-typedef enum { EXECUTE_SUCCESS, EXECUTE_TABLE_FULL } execute_result_t;
+typedef enum {
+  EXECUTE_SUCCESS,
+  EXECUTE_DUPLICATE_KEY,
+  EXECUTE_TABLE_FULL
+} execute_result_t;
 
 typedef enum {
 #define STATE_STR_GET_LENGTH(_sstr) (sizeof(_sstr) - sizeof(char))

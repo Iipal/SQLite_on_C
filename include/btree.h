@@ -38,12 +38,15 @@ typedef enum {
 #define LEAF_NODE_SPACE_FOR_CELLS PAGE_SIZE - LEAF_NODE_HEADER_SIZE
 #define LEAF_NODE_MAX_CELLS       LEAF_NODE_SPACE_FOR_CELLS / LEAF_NODE_CELL_SIZE
 
-void      leaf_node_init(void *node);
-uint32_t *leaf_node_num_cells(void *node);
-void *    leaf_node_cell(void *node, uint32_t cell_num);
-uint32_t *leaf_node_key(void *node, uint32_t cell_num);
-void *    leaf_node_value(void *node, uint32_t cell_num);
-void      leaf_node_insert(cursor_t *cursor, uint32_t key, row_t *value);
+void        leaf_node_init(void *node);
+uint32_t *  leaf_node_num_cells(void *node);
+void *      leaf_node_cell(void *node, uint32_t cell_num);
+node_type_t leaf_node_get_type(void *node);
+void        leaf_node_set_type(void *node, node_type_t type);
+uint32_t *  leaf_node_key(void *node, uint32_t cell_num);
+void *      leaf_node_value(void *node, uint32_t cell_num);
+void        leaf_node_insert(cursor_t *cursor, uint32_t key, row_t *value);
+cursor_t *  leaf_node_find(table_t *table, uint32_t page_num, uint32_t key);
 
 void print_leaf_node(void *node);
 

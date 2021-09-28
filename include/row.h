@@ -25,7 +25,7 @@ void serialize_row(row_t *src, void *dst);
 void deserialize_row(void *src, row_t *dst);
 
 static inline void print_row(row_t *restrict row) {
-  printf("(%d, %s|%p, %s|%p)\n",
+  printf("(%d, %s | %p, %s | %p)\n",
          row->id,
          row->username,
          row->username,
