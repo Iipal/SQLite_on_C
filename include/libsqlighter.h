@@ -24,6 +24,7 @@
 
 // custom includes:
 #include <command.h>
+#include <cursor.h>
 #include <meta_command.h>
 
 #endif /* __LIBSQLIGHTER_H__ */

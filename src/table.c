@@ -51,12 +51,3 @@ void db_close(table_t *table) {
   free(pager);
   free(table);
 }
-
-void *get_table_row_slot(table_t *table, uint32_t row_num) {
-  const uint32_t page_num    = row_num / ROWS_PER_PAGE;
-  void *         page        = pager_get_page(table->pager, page_num);
-  const uint32_t row_offset  = row_num % ROWS_PER_PAGE;
-  const uint32_t byte_offset = row_offset * ROW_SIZE;
-
-  return page + byte_offset;
-}

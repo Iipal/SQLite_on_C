@@ -45,20 +45,28 @@ execute_result_t execute_insert(table_t *table, state_t *state) {
     return EXECUTE_TABLE_FULL;
   }
 
-  row_t *r = &(state->current);
-  serialize_row(r, get_table_row_slot(table, table->count_rows));
+  row_t *   r      = &(state->current);
+  cursor_t *cursor = new_cursor_end(table);
+
+  serialize_row(r, cursor_value(cursor));
   ++table->count_rows;
+
+  free(cursor);
 
   return EXECUTE_SUCCESS;
 }
 execute_result_t execute_select(table_t *table, state_t *state) {
   (void)state;
-  row_t r;
+  cursor_t *cursor = new_cursor_start(table);
+  row_t     r;
 
-  for (uint32_t i = 0; table->count_rows > i; ++i) {
-    deserialize_row(get_table_row_slot(table, i), &r);
+  while (!(cursor->end_of_table)) {
+    deserialize_row(cursor_value(cursor), &r);
     print_row(&r);
+    cursor_move(cursor);
   }
+
+  free(cursor);
 
   return EXECUTE_SUCCESS;
 }
