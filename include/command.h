@@ -3,8 +3,10 @@
 
 typedef enum {
   PREPARE_SUCCESS,
-  PREPARE_UNRECOGNIZED_STATE,
   PREPARE_SYNTAX_ERROR,
+  PREPARE_NEGATIVE_ID,
+  PREPARE_STR_TOO_LONG,
+  PREPARE_UNRECOGNIZED_STATE,
 } prepare_result_t;
 
 typedef enum { EXECUTE_SUCCESS, EXECUTE_TABLE_FULL } execute_result_t;
@@ -24,7 +26,7 @@ typedef enum {
 
 typedef struct {
   state_type_t type;
-  row_t        last;
+  row_t        cursor;
 } state_t;
 
 prepare_result_t prepare_state(input_buffer_t *ib, state_t *state);

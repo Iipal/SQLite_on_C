@@ -1,13 +1,13 @@
 #ifndef __LIBSQLIGHTER_ROW_H__
 #define __LIBSQLIGHTER_ROW_H__
 
-#define COLUMN_USERNAME_SIZE 32
+#define COLUMN_USERNAME_SIZE 31
 #define COLUMN_EMAIL_SIZE    255
 
 typedef struct {
   uint32_t id;
-  char     username[COLUMN_USERNAME_SIZE];
-  char     email[COLUMN_EMAIL_SIZE];
+  char     username[COLUMN_USERNAME_SIZE + 1];
+  char     email[COLUMN_EMAIL_SIZE + 1];
 } row_t;
 
 #define size_of_attribute(Struct, Attribute) sizeof(((Struct *)0)->Attribute)
