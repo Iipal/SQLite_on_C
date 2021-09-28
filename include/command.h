@@ -4,7 +4,10 @@
 typedef enum {
   PREPARE_SUCCESS,
   PREPARE_UNRECOGNIZED_STATE,
+  PREPARE_SYNTAX_ERROR,
 } prepare_result_t;
+
+typedef enum { EXECUTE_SUCCESS, EXECUTE_TABLE_FULL } execute_result_t;
 
 typedef enum {
 #define STATE_STR_GET_LENGTH(_sstr) (sizeof(_sstr) - sizeof(char))
@@ -21,9 +24,10 @@ typedef enum {
 
 typedef struct {
   state_type_t type;
+  row_t        last;
 } state_t;
 
 prepare_result_t prepare_state(input_buffer_t *ib, state_t *state);
-void             execute_state(state_t *state);
+execute_result_t execute_state(table_t *table, state_t *state);
 
 #endif /* __LIBSQLIGHTER_COMMAND_H__ */

@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
   (void)argc;
   (void)argv;
 
-  input_buffer_t *ib = input_buffer_new();
+  input_buffer_t *ib    = input_buffer_new();
+  table_t *       table = new_table();
 
   while (true) {
     print_prompt();
@@ -46,11 +47,24 @@ int main(int argc, char *argv[]) {
     switch (prepare_state(ib, &state)) {
     case PREPARE_SUCCESS:
       break;
+    case PREPARE_SYNTAX_ERROR:
+      printf("Syntax error. Could not parse statement.\n");
+      continue;
+
     case (PREPARE_UNRECOGNIZED_STATE):
+    default:
       printf("Unrecognized keyword at start of '%s'\n", ib->buffer);
       continue;
     }
 
-    execute_state(&state);
+    switch (execute_state(table, &state)) {
+    case EXECUTE_TABLE_FULL:
+      printf("Error: Table full.\n");
+      break;
+
+    case EXECUTE_SUCCESS:
+    default:
+      break;
+    }
   }
 }
