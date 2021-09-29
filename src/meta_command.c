@@ -25,7 +25,7 @@ meta_command_result_t do_meta_command(input_buffer_t *ib, table_t *table) {
     return META_COMMAND_SUCCESS;
   } else if (!strcmp(ib->buffer, META_COMMAND_STR_BTREE)) {
     printf("Tree:\n");
-    print_leaf_node(pager_get_page(table->pager, 0));
+    print_tree(table->pager, 0, 0);
     return META_COMMAND_SUCCESS;
   } else {
     return META_COMMAND_UNRECOGNIZED;

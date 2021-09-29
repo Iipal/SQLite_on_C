@@ -54,6 +54,8 @@ void *pager_get_page(pager_t *pager, uint32_t page_num) {
   return pager->pages[page_num];
 }
 
+uint32_t pager_get_unused_page_num(pager_t *pager) { return pager->num_pages; }
+
 void pager_flush(pager_t *pager, uint32_t page_num) {
   if (!pager->pages[page_num]) {
     err(EXIT_FAILURE, "Tried to flush null page");

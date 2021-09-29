@@ -11,6 +11,7 @@ table_t *db_open(const char *filename) {
   if (!pager->num_pages) {
     void *root_node = pager_get_page(pager, 0);
     leaf_node_init(root_node);
+    node_set_root(root_node, true);
   }
 
   return out;

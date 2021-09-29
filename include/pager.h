@@ -13,6 +13,7 @@ typedef struct {
 
 pager_t *pager_open(const char *filename);
 void *   pager_get_page(pager_t *pager, uint32_t page_num);
+uint32_t pager_get_unused_page_num(pager_t *pager);
 void     pager_flush(pager_t *pager, uint32_t page_num);
 
 #endif /* __LIBSQLIGHTER_PAGER_H__ */

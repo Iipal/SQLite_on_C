@@ -44,10 +44,6 @@ static inline execute_result_t execute_insert(table_t *table, state_t *state) {
   void *   node      = pager_get_page(table->pager, table->root_page_num);
   uint32_t num_cells = (*leaf_node_num_cells(node));
 
-  if (LEAF_NODE_MAX_CELLS <= num_cells) {
-    return EXECUTE_TABLE_FULL;
-  }
-
   row_t *   r             = &(state->current);
   uint32_t  key_to_insert = r->id;
   cursor_t *cursor        = cursor_find(table, key_to_insert);
