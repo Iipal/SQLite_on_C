@@ -71,6 +71,7 @@ uint32_t *node_internal_right_child(void *node);
 uint32_t *node_internal_child(void *node, uint32_t child_num);
 uint32_t *node_internal_cell(void *node, uint32_t cell_num);
 uint32_t *node_internal_key(void *node, uint32_t key_num);
+cursor_t *node_internal_find(table_t *table, uint32_t s, uint32_t key);
 
 bool is_node_root(void *node);
 

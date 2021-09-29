@@ -73,6 +73,35 @@ uint32_t *node_internal_key(void *node, uint32_t key_num) {
   return node_internal_cell(node, key_num) + INTERNAL_NODE_CHILD_SIZE;
 }
 
+cursor_t *node_internal_find(table_t *table, uint32_t page_num, uint32_t key) {
+  void *   node     = pager_get_page(table->pager, page_num);
+  uint32_t num_keys = *node_internal_num_keys(node);
+
+  uint32_t min_index = 0;
+  uint32_t max_index = num_keys;
+
+  while (min_index != max_index) {
+    uint32_t index        = (min_index + max_index) / 2;
+    uint32_t key_to_right = *node_internal_key(node, index);
+    if (key_to_right >= key) {
+      max_index = index;
+    } else {
+      min_index = index + 1;
+    }
+  }
+
+  uint32_t child_num = *node_internal_child(node, min_index);
+  void *   child     = pager_get_page(table->pager, child_num);
+
+  switch (leaf_node_get_type(child)) {
+  case NODE_LEAF:
+    return leaf_node_find(table, child_num, key);
+
+  case NODE_INTERNAL:
+    return node_internal_find(table, child_num, key);
+  }
+}
+
 bool is_node_root(void *node) {
   uint8_t value = *((uint8_t *)(node + IS_ROOT_OFFSET));
   return (bool)value;

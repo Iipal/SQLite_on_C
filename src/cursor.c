@@ -19,7 +19,7 @@ cursor_t *cursor_find(table_t *table, uint32_t key) {
   if (NODE_LEAF == leaf_node_get_type(root_node)) {
     return leaf_node_find(table, root_page_num, key);
   } else {
-    errx(EXIT_FAILURE, "Need to implement searching internal node.");
+    return node_internal_find(table, root_page_num, key);
   }
 }
 
