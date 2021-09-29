@@ -22,6 +22,7 @@ void leaf_node_init(void *node) {
   leaf_node_set_type(node, NODE_LEAF);
   node_set_root(node, false);
   *leaf_node_num_cells(node) = 0;
+  *leaf_node_next_leaf(node) = 0;
 }
 
 void node_set_root(void *node, bool is_root) {
@@ -135,8 +136,6 @@ void leaf_node_insert(cursor_t *cursor, uint32_t key, row_t *value) {
   void *   node      = pager_get_page(cursor->table->pager, cursor->page_num);
   uint32_t num_cells = *leaf_node_num_cells(node);
 
-  printf("%lu - %d\n", LEAF_NODE_MAX_CELLS, num_cells);
-
   if (LEAF_NODE_MAX_CELLS <= num_cells) {
     leaf_node_split_and_insert(cursor, key, value);
     return;
@@ -160,6 +159,8 @@ void leaf_node_split_and_insert(cursor_t *cursor, uint32_t key, row_t *value) {
   void *   new_node     = pager_get_page(cursor->table->pager, new_page_num);
 
   leaf_node_init(new_node);
+  *leaf_node_next_leaf(new_node) = *leaf_node_next_leaf(old_node);
+  *leaf_node_next_leaf(old_node) = new_page_num;
 
   for (int32_t i = LEAF_NODE_MAX_CELLS; 0 <= i; --i) {
     void *dst_node;
@@ -173,7 +174,8 @@ void leaf_node_split_and_insert(cursor_t *cursor, uint32_t key, row_t *value) {
     void *   dst               = leaf_node_cell(dst_node, index_within_node);
 
     if (i == (int32_t)cursor->cell_num) {
-      serialize_row(value, dst);
+      serialize_row(value, leaf_node_value(dst_node, index_within_node));
+      *leaf_node_key(dst_node, index_within_node) = key;
     } else if (i > (int32_t)cursor->cell_num) {
       memcpy(dst, leaf_node_cell(old_node, i - 1), LEAF_NODE_CELL_SIZE);
     } else {
@@ -225,6 +227,8 @@ cursor_t *leaf_node_find(table_t *table, uint32_t page_num, uint32_t key) {
   cursor->cell_num = min_index;
   return cursor;
 }
+
+uint32_t *leaf_node_next_leaf(void *node) { return node + LEAF_NODE_NEXT_LEAF_OFFSET; }
 
 static inline void print_tree_indent(uint32_t lvl) {
   for (uint32_t i = 0; lvl > i; ++i) {

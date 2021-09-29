@@ -14,7 +14,7 @@ pager_t *pager_open(const char *filename) {
   pager->num_pages   = (file_lenght / PAGE_SIZE);
 
   if (file_lenght % PAGE_SIZE) {
-    err(EXIT_FAILURE, "db-file is not a whole number of pages. Corrupted file");
+    errx(EXIT_FAILURE, "db-file is not a whole number of pages. Corrupted file.");
   }
 
   return pager;
