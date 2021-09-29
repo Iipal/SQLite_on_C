@@ -62,11 +62,12 @@ typedef enum {
 #define INTERNAL_NODE_KEY_SIZE   sizeof(uint32_t)
 #define INTERNAL_NODE_CHILD_SIZE sizeof(uint32_t)
 #define INTERNAL_NODE_CELL_SIZE  (INTERNAL_NODE_CHILD_SIZE + INTERNAL_NODE_KEY_SIZE)
+#define INTERNAL_NODE_MAX_CELLS  3
 
-void node_new_root(table_t *table, uint32_t right_child_page_num);
-void node_set_root(void *node, bool is_root);
-
-uint32_t node_get_max_key(void *node);
+void      node_new_root(table_t *table, uint32_t right_child_page_num);
+void      node_set_root(void *node, bool is_root);
+uint32_t *node_parent(void *node);
+uint32_t  node_get_max_key(void *node);
 
 void      node_internal_init(void *node);
 uint32_t *node_internal_num_keys(void *node);
@@ -74,7 +75,12 @@ uint32_t *node_internal_right_child(void *node);
 uint32_t *node_internal_child(void *node, uint32_t child_num);
 uint32_t *node_internal_cell(void *node, uint32_t cell_num);
 uint32_t *node_internal_key(void *node, uint32_t key_num);
-cursor_t *node_internal_find(table_t *table, uint32_t s, uint32_t key);
+void      node_internal_update_key(void *node, uint32_t old_key, uint32_t new_key);
+uint32_t  node_internal_find_child(void *node, uint32_t key);
+cursor_t *node_internal_find(table_t *table, uint32_t page_num, uint32_t key);
+void      node_internal_insert(table_t *table,
+                               uint32_t parent_page_num,
+                               uint32_t child_page_num);
 
 bool is_node_root(void *node);
 
