@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_ROW_H__
-#define __LIBSQLIGHTER_ROW_H__
+#ifndef __SQLC_LIBSQLIGHTER_ROW_H__
+#define __SQLC_LIBSQLIGHTER_ROW_H__
 
 #define COLUMN_USERNAME_SIZE 31
 #define COLUMN_EMAIL_SIZE    255
@@ -25,12 +25,7 @@ void serialize_row(row_t *src, void *dst);
 void deserialize_row(void *src, row_t *dst);
 
 static inline void print_row(row_t *restrict row) {
-  printf("(%d, %s | %p, %s | %p)\n",
-         row->id,
-         row->username,
-         row->username,
-         row->email,
-         row->email);
+  printf("(%d, %s, %s)\n", row->id, row->username, row->email);
 };
 
-#endif /* __LIBSQLIGHTER_ROW_H__ */
+#endif /* __SQLC_LIBSQLIGHTER_ROW_H__ */

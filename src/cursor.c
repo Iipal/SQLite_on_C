@@ -1,4 +1,4 @@
-#include <libsqlighter.h>
+#include <sqlite_on_c.h>
 
 cursor_t *new_cursor_start(table_t *table) {
   cursor_t *cursor = cursor_find(table, 0);

@@ -1,4 +1,4 @@
-#include <libsqlighter.h>
+#include <sqlite_on_c.h>
 
 static inline void print_constants() {
   printf("Constants:\n"

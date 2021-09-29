@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_COMMAND_H__
-#define __LIBSQLIGHTER_COMMAND_H__
+#ifndef __SQLC_COMMAND_H__
+#define __SQLC_COMMAND_H__
 
 typedef enum {
   PREPARE_SUCCESS,
@@ -36,4 +36,4 @@ typedef struct {
 prepare_result_t prepare_state(input_buffer_t *ib, state_t *state);
 execute_result_t execute_state(table_t *table, state_t *state);
 
-#endif /* __LIBSQLIGHTER_COMMAND_H__ */
+#endif /* __SQLC_COMMAND_H__ */

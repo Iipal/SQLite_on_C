@@ -1,4 +1,4 @@
-#include <libsqlighter.h>
+#include <sqlite_on_c.h>
 
 void node_new_root(table_t *table, uint32_t right_child_page_num) {
   void *   root                = pager_get_page(table->pager, table->root_page_num);

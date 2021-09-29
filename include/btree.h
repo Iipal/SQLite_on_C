@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_BTREE_H__
-#define __LIBSQLIGHTER_BTREE_H__
+#ifndef __SQLC_BTREE_H__
+#define __SQLC_BTREE_H__
 
 typedef enum {
   NODE_INTERNAL,
@@ -98,4 +98,4 @@ uint32_t *  leaf_node_next_leaf(void *node);
 
 void print_tree(pager_t *pager, uint32_t page_num, uint32_t indent_lvl);
 
-#endif /* __LIBSQLIGHTER_BTREE_H__ */
+#endif /* __SQLC_BTREE_H__ */

@@ -1,4 +1,4 @@
-#include <libsqlighter.h>
+#include <sqlite_on_c.h>
 
 table_t *db_open(const char *filename) {
   pager_t *pager = pager_open(filename);

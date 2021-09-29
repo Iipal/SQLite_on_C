@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_H__
-#define __LIBSQLIGHTER_H__
+#ifndef __SQLITE_ON_C_H__
+#define __SQLITE_ON_C_H__
 
 #define _GNU_SOURCE
 
@@ -30,4 +30,4 @@
 #include <command.h>
 #include <meta_command.h>
 
-#endif /* __LIBSQLIGHTER_H__ */
+#endif /* __SQLITE_ON_C_H__ */

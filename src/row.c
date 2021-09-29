@@ -1,4 +1,4 @@
-#include <libsqlighter.h>
+#include <sqlite_on_c.h>
 
 void serialize_row(row_t *src, void *dst) {
   memcpy(dst + ID_OFFSET, &(src->id), ID_SIZE);

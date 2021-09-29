@@ -1,4 +1,4 @@
-#include <libsqlighter.h>
+#include <sqlite_on_c.h>
 
 static inline prepare_result_t prepare_insert(input_buffer_t *ib, state_t *state) {
   state->type = STATE_INSERT;

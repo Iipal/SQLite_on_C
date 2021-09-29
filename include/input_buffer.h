@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_INPUTBUFFER_H__
-#define __LIBSQLIGHTER_INPUTBUFFER_H__
+#ifndef __SQLC_INPUTBUFFER_H__
+#define __SQLC_INPUTBUFFER_H__
 
 typedef struct {
   char *  buffer;
@@ -9,4 +9,4 @@ typedef struct {
 
 input_buffer_t *input_buffer_new(void);
 
-#endif /* __LIBSQLIGHTER_INPUTBUFFER_H__ */
+#endif /* __SQLC_INPUTBUFFER_H__ */

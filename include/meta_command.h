@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_META_COMMAND_H__
-#define __LIBSQLIGHTER_META_COMMAND_H__
+#ifndef __SQLC_META_COMMAND_H__
+#define __SQLC_META_COMMAND_H__
 
 #define META_COMMAND_STR_EXIT      ".exit"
 #define META_COMMAND_STR_CONSTANTS ".constants"
@@ -12,4 +12,4 @@ typedef enum {
 
 meta_command_result_t do_meta_command(input_buffer_t *ib, table_t *table);
 
-#endif /* __LIBSQLIGHTER_META_COMMAND_H__ */
+#endif /* __SQLC_META_COMMAND_H__ */

@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_TABLE_H__
-#define __LIBSQLIGHTER_TABLE_H__
+#ifndef __SQLC_TABLE_H__
+#define __SQLC_TABLE_H__
 
 typedef struct {
   pager_t *pager;
@@ -9,4 +9,4 @@ typedef struct {
 table_t *db_open(const char *filename);
 void     db_close(table_t *table);
 
-#endif /* __LIBSQLIGHTER_TABLE_H__ */
+#endif /* __SQLC_TABLE_H__ */

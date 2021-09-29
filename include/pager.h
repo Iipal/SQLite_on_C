@@ -1,5 +1,5 @@
-#ifndef __LIBSQLIGHTER_PAGER_H__
-#define __LIBSQLIGHTER_PAGER_H__
+#ifndef __SQLC_PAGER_H__
+#define __SQLC_PAGER_H__
 
 #define PAGE_SIZE       4096
 #define TABLE_MAX_PAGES 100
@@ -16,4 +16,4 @@ void *   pager_get_page(pager_t *pager, uint32_t page_num);
 uint32_t pager_get_unused_page_num(pager_t *pager);
 void     pager_flush(pager_t *pager, uint32_t page_num);
 
-#endif /* __LIBSQLIGHTER_PAGER_H__ */
+#endif /* __SQLC_PAGER_H__ */
